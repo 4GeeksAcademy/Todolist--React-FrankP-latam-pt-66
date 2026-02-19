@@ -1,28 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
+import TaskInput from "./TaskInput";
+import TodoList from "./TodoList";
+import TaskFooter from "./TaskFooter";
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
-
-//create your first component
 const Home = () => {
-	return (
-		<div className="text-center">
-            
+  const [tasks, setTasks] = useState([]);
 
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
-		</div>
-	);
+  const addTask = (newTask) => setTasks([...tasks, newTask]);
+  
+  const deleteTask = (index) => {
+    setTasks(tasks.filter((_, i) => i !== index));
+  };
+
+  return (
+    <div className="container mt-5 w-50">
+      <h1 className="text-center display-1 opacity-25 mb-0" style={{ color: "#EAD7D7" }}>
+        todos
+      </h1>
+      
+      <div className="card shadow-sm border-0 rounded-0">
+        <ul className="list-group list-group-flush">
+          
+          <TaskInput onAddTask={addTask} />
+          
+          
+          <TodoList tasks={tasks} onDeleteTask={deleteTask} />
+        </ul>
+        
+       
+        <TaskFooter count={tasks.length} />
+      </div>
+    </div>
+  );
 };
 
 export default Home;
